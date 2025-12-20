@@ -1,15 +1,26 @@
 import { Text, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
-export default function Index() {
+import { Banner } from "@/components/auth/banner";
+
+export default function AuthScreen() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View style={styles.screen}>
+      <Banner />
+      <Text style={styles.text}>Hello</Text>
     </View>
   );
 }
+
+export const styles = StyleSheet.create((theme) => ({
+  screen: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 40,
+    backgroundColor: theme.colors.background,
+  },
+  text: {
+    color: theme.colors.text,
+  },
+}));

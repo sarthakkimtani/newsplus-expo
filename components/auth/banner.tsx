@@ -5,14 +5,7 @@ import { StyleSheet } from "react-native-unistyles";
 export const Banner = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.graphicsRow}>
-        <Image style={styles.graphic} source={require("../assets/images/graphic.png")} />
-        <Image
-          style={[styles.graphic, styles.graphicRotated]}
-          source={require("../assets/images/graphic.png")}
-        />
-      </View>
-      <Image style={styles.logo} source={require("../assets/images/logo.png")} />
+      <Image style={styles.logo} source={require("../../assets/images/logo.png")} />
     </View>
   );
 };
@@ -20,28 +13,17 @@ export const Banner = () => {
 const styles = StyleSheet.create((theme) => ({
   container: {
     width: "100%",
-    height: 400,
+    height: 300,
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: theme.colors.primary,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-    paddingVertical: 80,
-  },
-  graphicsRow: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  graphic: {
-    width: 140,
-    height: 140,
-  },
-  graphicRotated: {
-    transform: [{ rotate: "90deg" }],
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    paddingTop: 40,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 140,
+    height: 140,
   },
 }));

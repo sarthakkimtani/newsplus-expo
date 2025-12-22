@@ -7,12 +7,14 @@ interface TextFieldProps extends TextInputProps {
   label: string;
   iconName?: keyof typeof Ionicons.glyphMap;
   isPassword?: boolean;
+  error?: string;
 }
 
 export function TextField({
   label,
   iconName,
   isPassword = false,
+  error,
   style,
   ...props
 }: TextFieldProps) {
@@ -24,12 +26,18 @@ export function TextField({
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <View style={[styles.inputWrapper, isFocused && styles.inputWrapperFocused]}>
+      <View
+        style={[
+          styles.inputWrapper,
+          isFocused && styles.inputWrapperFocused,
+          !!error && styles.inputWrapperError,
+        ]}
+      >
         {iconName && (
           <Ionicons
             name={iconName}
             size={20}
-            color={isFocused ? "#000000" : "#888888"}
+            color={!!error ? "#FF3B30" : isFocused ? "#000000" : "#888888"}
             style={styles.inputIcon}
           />
         )}
@@ -55,6 +63,7 @@ export function TextField({
           </Pressable>
         )}
       </View>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
@@ -83,6 +92,9 @@ const styles = StyleSheet.create((theme) => ({
     borderColor: theme.colors.primary,
     backgroundColor: theme.colors.white,
   },
+  inputWrapperError: {
+    borderColor: "#FF3B30",
+  },
   inputIcon: {
     marginRight: 12,
   },
@@ -95,5 +107,11 @@ const styles = StyleSheet.create((theme) => ({
   },
   eyeIcon: {
     padding: 4,
+  },
+  errorText: {
+    fontSize: 12,
+    fontFamily: theme.fonts.primary.regular,
+    color: "#FF3B30",
+    marginLeft: 4,
   },
 }));

@@ -1,4 +1,4 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Icon, Label, NativeTabs, VectorIcon } from "expo-router/unstable-native-tabs";
 
 export default function TabLayout() {
@@ -13,40 +13,32 @@ export default function TabLayout() {
         <Label>Home</Label>
         <Icon
           selectedColor={"#000"}
-          src={{
-            default: <VectorIcon family={Ionicons} name="home-outline" />,
-            selected: <VectorIcon family={Ionicons} name="home" />,
-          }}
+          sf={{ default: "house", selected: "house.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="home" />}
         />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="stocks">
         <Label>Stocks</Label>
         <Icon
           selectedColor={"#000"}
-          src={{
-            default: <VectorIcon family={Ionicons} name="trending-up-outline" />,
-            selected: <VectorIcon family={Ionicons} name="trending-up" />,
-          }}
+          sf={{ default: "chart.bar", selected: "chart.bar.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="trending-up" />}
         />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="watchlist">
         <Label>Watchlist</Label>
         <Icon
           selectedColor={"#000"}
-          src={{
-            default: <VectorIcon family={Ionicons} name="eye-outline" />,
-            selected: <VectorIcon family={Ionicons} name="eye" />,
-          }}
+          sf={{ default: "chart.pie", selected: "chart.pie.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="library-books" />}
         />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="members">
         <Label>Members</Label>
         <Icon
           selectedColor={"#000"}
-          src={{
-            default: <VectorIcon family={Ionicons} name="people-outline" />,
-            selected: <VectorIcon family={Ionicons} name="people" />,
-          }}
+          sf={{ default: "person", selected: "person.fill" }}
+          androidSrc={<VectorIcon family={MaterialIcons} name="group" />}
         />
       </NativeTabs.Trigger>
     </NativeTabs>

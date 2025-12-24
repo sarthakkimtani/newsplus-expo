@@ -34,7 +34,7 @@ export const LoginForm = () => {
     setLoading(true);
     try {
       await login(form.email, form.password);
-      router.replace("/home");
+      router.replace("/");
     } catch (e: any) {
       Alert.alert("Error", getError(e, "Login failed"));
     } finally {

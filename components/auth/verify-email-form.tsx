@@ -17,7 +17,7 @@ export const VerifyEmailForm = () => {
     setLoading(true);
     try {
       await verifyEmail(code);
-      router.replace("/home");
+      router.replace("/");
     } catch (e: any) {
       Alert.alert("Error", getError(e, "Verification failed"));
     } finally {

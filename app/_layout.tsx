@@ -1,17 +1,34 @@
-import { ClerkProvider } from "@clerk/clerk-expo";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Ionicons } from "@expo/vector-icons";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
 
-export default function RootLayout() {
+SplashScreen.preventAutoHideAsync();
+
+function AppLayout() {
+  const { isLoaded, isSignedIn } = useAuth();
   const theme = UnistylesRuntime.getTheme();
 
+  useEffect(() => {
+    if (isLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [isLoaded]);
+
+  if (!isLoaded) {
+    return null;
+  }
+
   return (
-    <ClerkProvider tokenCache={tokenCache}>
-      <Stack>
+    <Stack>
+      <Stack.Protected guard={!isSignedIn}>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Protected guard={isSignedIn!}>
         <Stack.Screen
           name="(tabs)"
           options={{
@@ -35,14 +52,26 @@ export default function RootLayout() {
                 <TouchableOpacity onPress={() => {}}>
                   <Ionicons name="bookmark-outline" size={24} color={theme.colors.text} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => router.push("/settings")}>
                   <Ionicons name="person-circle-outline" size={26} color={theme.colors.text} />
                 </TouchableOpacity>
               </View>
             ),
           }}
         />
-      </Stack>
+        <Stack.Screen
+          name="settings"
+          options={{ presentation: "modal", title: "Settings", headerShadowVisible: false }}
+        />
+      </Stack.Protected>
+    </Stack>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ClerkProvider tokenCache={tokenCache}>
+      <AppLayout />
     </ClerkProvider>
   );
 }

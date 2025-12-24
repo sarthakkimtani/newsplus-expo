@@ -12,7 +12,7 @@ export default function TabLayout() {
       indicatorColor="#00000021"
       backgroundColor={theme.colors.surface}
     >
-      <NativeTabs.Trigger name="home">
+      <NativeTabs.Trigger name="index">
         <Label>Home</Label>
         <Icon
           selectedColor={theme.colors.primary}

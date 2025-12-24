@@ -15,9 +15,9 @@ export const useClerkAuth = () => {
     await setSignInActive({ session: res.createdSessionId });
   };
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (firstName: string, lastName: string, email: string, password: string) => {
     if (!signUpLoaded) return;
-    await signUp.create({ emailAddress: email, password });
+    await signUp.create({ firstName, lastName, emailAddress: email, password });
     await signUp.prepareEmailAddressVerification({
       strategy: "email_code",
     });

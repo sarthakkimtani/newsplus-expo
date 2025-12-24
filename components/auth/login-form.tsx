@@ -6,20 +6,20 @@ import { z } from "zod";
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
 import { useClerkAuth } from "@/hooks/use-clerk-auth";
-import { authSchema } from "@/utils/auth-schema";
+import { loginSchema } from "@/utils/auth-schema";
 
 export const LoginForm = () => {
   const router = useRouter();
   const { login, getError } = useClerkAuth();
 
   const [form, setForm] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<Partial<typeof form>>({});
   const [loading, setLoading] = useState(false);
 
   const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
   const onSubmit = async () => {
-    const result = authSchema.safeParse(form);
+    const result = loginSchema.safeParse(form);
     if (!result.success) {
       const f = z.flattenError(result.error);
       const error = {

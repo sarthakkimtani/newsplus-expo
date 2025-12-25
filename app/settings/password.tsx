@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform, Text, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 import { z } from "zod";
 
@@ -49,13 +49,9 @@ export default function AccountScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
-    >
+    <KeyboardAvoidingView behavior="padding" style={styles.container} keyboardVerticalOffset={100}>
       <View style={styles.header}>
-        <Text style={styles.title}>Change Password</Text>
+        <Text style={styles.title}>Update Password</Text>
         <Text style={styles.subtitle}>Enter your existing password & your new password below</Text>
       </View>
 

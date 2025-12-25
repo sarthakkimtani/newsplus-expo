@@ -7,7 +7,7 @@ export default function SettingsLayout() {
   const screens = [
     { name: "index", title: "Settings" },
     { name: "account", title: "Account" },
-    { name: "password", title: "Change Password" },
+    { name: "password", title: "Password" },
     { name: "delete", title: "Delete Account" },
   ];
 

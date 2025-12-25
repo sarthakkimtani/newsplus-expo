@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 
@@ -7,7 +6,6 @@ import { TextField } from "@/components/ui/text-field";
 import { useClerkAuth } from "@/hooks/use-clerk-auth";
 
 export const VerifyEmailForm = () => {
-  const router = useRouter();
   const { verifyEmail, getError } = useClerkAuth();
 
   const [code, setCode] = useState("");
@@ -17,7 +15,6 @@ export const VerifyEmailForm = () => {
     setLoading(true);
     try {
       await verifyEmail(code);
-      router.replace("/");
     } catch (e: any) {
       Alert.alert("Error", getError(e, "Verification failed"));
     } finally {

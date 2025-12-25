@@ -4,10 +4,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { TouchableOpacity, View } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
+import { Platform, TouchableOpacity, View } from "react-native";
+import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({
+  fade: true,
+});
 
 function AppLayout() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -34,21 +37,10 @@ function AppLayout() {
           options={{
             title: "News+",
             headerStyle: { backgroundColor: theme.colors.background },
-            headerTitleStyle: {
-              color: theme.colors.text,
-              fontFamily: theme.fonts.primary.bold,
-              fontWeight: "bold",
-              fontSize: 20,
-            },
+            headerTitleStyle: styles.headerTitle,
             headerShadowVisible: false,
             headerRight: () => (
-              <View
-                style={{
-                  flexDirection: "row",
-                  gap: theme.spacing.lg,
-                  paddingHorizontal: theme.spacing.sm,
-                }}
-              >
+              <View style={styles.headerRight}>
                 <TouchableOpacity onPress={() => {}}>
                   <Ionicons name="bookmark-outline" size={24} color={theme.colors.text} />
                 </TouchableOpacity>
@@ -61,7 +53,17 @@ function AppLayout() {
         />
         <Stack.Screen
           name="settings"
-          options={{ presentation: "modal", title: "Settings", headerShadowVisible: false }}
+          options={{
+            presentation: "modal",
+            title: "Settings",
+            headerShadowVisible: false,
+            headerRight: () =>
+              Platform.OS === "ios" && (
+                <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
+                  <Ionicons name="close" size={24} color={theme.colors.text} />
+                </TouchableOpacity>
+              ),
+          }}
         />
       </Stack.Protected>
     </Stack>
@@ -75,3 +77,22 @@ export default function RootLayout() {
     </ClerkProvider>
   );
 }
+
+const styles = StyleSheet.create((theme) => ({
+  headerTitle: {
+    color: theme.colors.text,
+    fontFamily: theme.fonts.primary.bold,
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  headerRight: {
+    flexDirection: "row",
+    gap: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.sm,
+  },
+  closeButton: {
+    width: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+}));

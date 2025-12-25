@@ -9,6 +9,7 @@ export const lightTheme = {
     background: "#FFFFFF",
     surface: "#F9FAFB",
     outline: "#e5e5e5",
+    danger: "#E53935",
     white: "#FFFFFF",
   },
   spacing: {
@@ -22,6 +23,7 @@ export const lightTheme = {
     sm: 8,
     md: 12,
     lg: 16,
+    xl: 24,
   },
   fonts: {
     primary: {

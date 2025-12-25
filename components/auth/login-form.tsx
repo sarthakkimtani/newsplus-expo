@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 import { z } from "zod";
@@ -9,7 +8,6 @@ import { useClerkAuth } from "@/hooks/use-clerk-auth";
 import { loginSchema } from "@/utils/auth-schema";
 
 export const LoginForm = () => {
-  const router = useRouter();
   const { login, getError } = useClerkAuth();
 
   const [form, setForm] = useState({ email: "", password: "" });
@@ -34,7 +32,6 @@ export const LoginForm = () => {
     setLoading(true);
     try {
       await login(form.email, form.password);
-      router.replace("/");
     } catch (e: any) {
       Alert.alert("Error", getError(e, "Login failed"));
     } finally {

@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Platform, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 SplashScreen.preventAutoHideAsync();
@@ -55,14 +55,7 @@ function AppLayout() {
           name="settings"
           options={{
             presentation: "modal",
-            title: "Settings",
-            headerShadowVisible: false,
-            headerRight: () =>
-              Platform.OS === "ios" && (
-                <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
-                  <Ionicons name="close" size={24} color={theme.colors.text} />
-                </TouchableOpacity>
-              ),
+            headerShown: false,
           }}
         />
       </Stack.Protected>
@@ -89,10 +82,5 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     gap: theme.spacing.lg,
     paddingHorizontal: theme.spacing.sm,
-  },
-  closeButton: {
-    width: 40,
-    alignItems: "center",
-    justifyContent: "center",
   },
 }));

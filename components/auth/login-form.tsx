@@ -5,13 +5,13 @@ import { z } from "zod";
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
 import { useClerkAuth } from "@/hooks/use-clerk-auth";
-import { loginSchema } from "@/utils/auth-schema";
+import { LoginSchema, loginSchema } from "@/utils/auth-schema";
 
 export const LoginForm = () => {
   const { login, getError } = useClerkAuth();
 
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [errors, setErrors] = useState<Partial<typeof form>>({});
+  const [form, setForm] = useState<LoginSchema>({ email: "", password: "" });
+  const [errors, setErrors] = useState<Partial<LoginSchema>>({});
   const [loading, setLoading] = useState(false);
 
   const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));

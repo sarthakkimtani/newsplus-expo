@@ -5,11 +5,13 @@ import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 import { SettingsTile } from "@/components/ui/settings-tile";
+import { useRouter } from "expo-router";
 
 export default function SettingsScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
   const { signOut } = useClerk();
+  const router = useRouter();
 
   const initials = `${user?.firstName?.charAt(0)}${user?.lastName?.charAt(0)}`;
 
@@ -36,13 +38,21 @@ export default function SettingsScreen() {
       </View>
 
       <View style={styles.menuContainer}>
-        <SettingsTile title="About account" icon="person-outline" onPress={() => {}} />
-        <SettingsTile title="Change password" icon="lock-closed-outline" onPress={() => {}} />
+        <SettingsTile
+          title="About account"
+          icon="person-outline"
+          onPress={() => router.push("/settings/account")}
+        />
+        <SettingsTile
+          title="Change password"
+          icon="lock-closed-outline"
+          onPress={() => router.push("/settings/password")}
+        />
         <SettingsTile
           title="Delete account"
           icon="trash-outline"
           isDestructive
-          onPress={() => {}}
+          onPress={() => router.push("/settings/delete")}
         />
       </View>
 

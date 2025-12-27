@@ -9,9 +9,15 @@ export const VerifyEmailForm = () => {
   const { verifyEmail, getError } = useClerkAuth();
 
   const [code, setCode] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
+    if (!/^\d{6}$/.test(code)) {
+      setError("Please enter a valid 6-digit code");
+      return;
+    }
+
     setLoading(true);
     try {
       await verifyEmail(code);
@@ -28,6 +34,7 @@ export const VerifyEmailForm = () => {
         label="Verification Code"
         value={code}
         onChangeText={setCode}
+        error={error}
         placeholder="123456"
         keyboardType="number-pad"
         textContentType="oneTimeCode"

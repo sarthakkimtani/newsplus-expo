@@ -1,33 +1,23 @@
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import { z } from "zod";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
 import { useClerkAuth } from "@/hooks/use-clerk-auth";
-import { LoginSchema, loginSchema } from "@/utils/auth-schema";
+import { useForm } from "@/hooks/use-form";
+import { loginSchema } from "@/utils/auth-schema";
 
 export const LoginForm = () => {
   const { login, getError } = useClerkAuth();
 
-  const [form, setForm] = useState<LoginSchema>({ email: "", password: "" });
-  const [errors, setErrors] = useState<Partial<LoginSchema>>({});
+  const { form, errors, update, validate } = useForm({
+    schema: loginSchema,
+    initialValues: { email: "", password: "" },
+  });
   const [loading, setLoading] = useState(false);
 
-  const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
-
   const onSubmit = async () => {
-    const result = loginSchema.safeParse(form);
-    if (!result.success) {
-      const f = z.flattenError(result.error);
-      const error = {
-        email: f.fieldErrors.email?.[0],
-        password: f.fieldErrors.password?.[0],
-      };
-
-      setErrors(error);
-      return;
-    }
+    if (!validate()) return;
 
     setLoading(true);
     try {

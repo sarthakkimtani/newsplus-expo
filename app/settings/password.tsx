@@ -3,36 +3,26 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
-import { z } from "zod";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
-import { passwordChangeSchema, PasswordChangeSchema } from "@/utils/auth-schema";
+import { useForm } from "@/hooks/use-form";
+import { passwordChangeSchema } from "@/utils/auth-schema";
 
 export default function AccountScreen() {
-  const [form, setForm] = useState<PasswordChangeSchema>({ currentPassword: "", newPassword: "" });
-  const [errors, setErrors] = useState<Partial<PasswordChangeSchema>>({});
+  const { form, errors, update, validate } = useForm({
+    schema: passwordChangeSchema,
+    initialValues: { currentPassword: "", newPassword: "" },
+  });
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
   const router = useRouter();
 
   const theme = UnistylesRuntime.getTheme();
 
-  const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
-
   const handleUpdate = async () => {
     if (!user) return;
-    const result = passwordChangeSchema.safeParse(form);
-    if (!result.success) {
-      const f = z.flattenError(result.error);
-      const error = {
-        currentPassword: f.fieldErrors.currentPassword?.[0],
-        newPassword: f.fieldErrors.newPassword?.[0],
-      };
-
-      setErrors(error);
-      return;
-    }
+    if (!validate()) return;
 
     setIsLoading(true);
     try {

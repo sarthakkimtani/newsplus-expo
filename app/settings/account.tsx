@@ -3,39 +3,29 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
-import { z } from "zod";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
-import { nameChangeSchema, NameChangeSchema } from "@/utils/auth-schema";
+import { useForm } from "@/hooks/use-form";
+import { nameChangeSchema } from "@/utils/auth-schema";
 
 export default function AccountScreen() {
   const { user } = useUser();
-  const [form, setForm] = useState<NameChangeSchema>({
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
+  const { form, errors, update, validate } = useForm({
+    schema: nameChangeSchema,
+    initialValues: {
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+    },
   });
-  const [errors, setErrors] = useState<Partial<NameChangeSchema>>({});
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const theme = UnistylesRuntime.getTheme();
 
-  const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
-
   const handleUpdate = async () => {
     if (!user) return;
-    const result = nameChangeSchema.safeParse(form);
-    if (!result.success) {
-      const f = z.flattenError(result.error);
-      const error = {
-        firstName: f.fieldErrors.firstName?.[0],
-        lastName: f.fieldErrors.lastName?.[0],
-      };
-
-      setErrors(error);
-      return;
-    }
+    if (!validate()) return;
 
     setIsLoading(true);
     try {

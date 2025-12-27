@@ -1,40 +1,22 @@
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import { z } from "zod";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
 import { useClerkAuth } from "@/hooks/use-clerk-auth";
-import { SignupSchema, signupSchema } from "@/utils/auth-schema";
+import { useForm } from "@/hooks/use-form";
+import { signupSchema } from "@/utils/auth-schema";
 
 export const SignupForm = ({ onPending }: { onPending: () => void }) => {
   const { signup, getError } = useClerkAuth();
-
-  const [form, setForm] = useState<SignupSchema>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+  const { form, errors, update, validate } = useForm({
+    schema: signupSchema,
+    initialValues: { firstName: "", lastName: "", email: "", password: "" },
   });
-  const [errors, setErrors] = useState<Partial<SignupSchema>>({});
   const [loading, setLoading] = useState(false);
 
-  const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
-
   const onSubmit = async () => {
-    const result = signupSchema.safeParse(form);
-    if (!result.success) {
-      const f = z.flattenError(result.error);
-      const error = {
-        firstName: f.fieldErrors.firstName?.[0],
-        lastName: f.fieldErrors.lastName?.[0],
-        email: f.fieldErrors.email?.[0],
-        password: f.fieldErrors.password?.[0],
-      };
-
-      setErrors(error);
-      return;
-    }
+    if (!validate()) return;
 
     setLoading(true);
     try {

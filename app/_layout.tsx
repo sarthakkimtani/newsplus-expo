@@ -1,11 +1,14 @@
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Ionicons } from "@expo/vector-icons";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+
+const queryClient = new QueryClient();
 
 SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({
@@ -65,9 +68,11 @@ function AppLayout() {
 
 export default function RootLayout() {
   return (
-    <ClerkProvider tokenCache={tokenCache}>
-      <AppLayout />
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ClerkProvider tokenCache={tokenCache}>
+        <AppLayout />
+      </ClerkProvider>
+    </QueryClientProvider>
   );
 }
 

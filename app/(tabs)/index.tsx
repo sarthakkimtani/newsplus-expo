@@ -1,3 +1,4 @@
+import { useHeaderHeight } from "@react-navigation/elements";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
@@ -19,6 +20,7 @@ const fetchNews = async (): Promise<NewsResponse> => {
 };
 
 export default function HomeScreen() {
+  const headerHeight = useHeaderHeight();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["news"],
     queryFn: fetchNews,
@@ -37,7 +39,7 @@ export default function HomeScreen() {
 
   if (error) {
     return (
-      <View style={styles.center}>
+      <View style={[styles.center, { paddingBottom: headerHeight }]}>
         <StatusBar style="dark" />
         <Image source={require("@/assets/images/error.png")} style={styles.image} />
         <Text style={styles.title}>Something went wrong!</Text>
@@ -92,8 +94,8 @@ const styles = StyleSheet.create((theme) => ({
     marginBottom: 20,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     marginBottom: 20,
   },
   listContent: {

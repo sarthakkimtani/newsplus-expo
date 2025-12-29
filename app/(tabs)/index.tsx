@@ -97,6 +97,6 @@ const styles = StyleSheet.create((theme) => ({
     marginBottom: 20,
   },
   listContent: {
-    paddingBottom: theme.spacing.xl,
+    paddingBottom: 120,
   },
 }));

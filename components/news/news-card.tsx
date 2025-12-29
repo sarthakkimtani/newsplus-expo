@@ -1,13 +1,26 @@
 import { Image } from "expo-image";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 import { relativeDate } from "@/utils/date";
 import { Article } from "@/utils/types/news";
+import { useRouter } from "expo-router";
 
 export const NewsCard = ({ article }: { article: Article }) => {
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push({
+      pathname: "/webview",
+      params: { url: article.url },
+    });
+  };
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      onPress={handlePress}
+      style={({ pressed }) => [styles.container, pressed && styles.pressed]}
+    >
       <View style={styles.contentContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.source}>{article.source.name}</Text>
@@ -25,7 +38,7 @@ export const NewsCard = ({ article }: { article: Article }) => {
           />
         )}
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -35,6 +48,10 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.background,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.outline,
+  },
+  pressed: {
+    transform: [{ scale: 0.97 }],
+    opacity: 0.85,
   },
   contentContainer: {
     flexDirection: "row",

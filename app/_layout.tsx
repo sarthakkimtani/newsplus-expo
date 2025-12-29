@@ -61,6 +61,20 @@ function AppLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="webview"
+          options={{
+            headerTitle: "",
+            headerBackButtonDisplayMode: "minimal",
+            headerRight: () => (
+              <View style={styles.headerRight}>
+                <TouchableOpacity onPress={() => {}}>
+                  <Ionicons name="bookmark-outline" size={24} color={theme.colors.text} />
+                </TouchableOpacity>
+              </View>
+            ),
+          }}
+        />
       </Stack.Protected>
     </Stack>
   );

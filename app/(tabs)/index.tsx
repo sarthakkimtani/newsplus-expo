@@ -1,17 +1,18 @@
-import { useHeaderHeight } from "@react-navigation/elements";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
-import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
-import { Text, TouchableOpacity, View } from "react-native";
+import { useEffect } from "react";
+import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
-import { NewsCard } from "@/components/news/news-card";
-import { NewsShimmer } from "@/components/news/news-shimmer";
-import { PrimaryNewsCard } from "@/components/news/primary-news-card";
-import { NewsResponse } from "@/utils/types/news";
+import { ArticleCard } from "@/components/article/article-card";
+import { ArticleShimmer } from "@/components/article/article-shimmer";
+import { ErrorBanner } from "@/components/article/error-banner";
+import { PrimaryArticleCard } from "@/components/article/primary-article-card";
+import { useArticlesStore } from "@/lib/stores/use-article-store";
+import { ArticleResponse, mapArticle } from "@/utils/types/article";
 
-const fetchNews = async (): Promise<NewsResponse> => {
+const fetchArticles = async (): Promise<ArticleResponse> => {
   const response = await fetch("/api/news");
   if (!response.ok) {
     throw new Error("Network response error");
@@ -20,45 +21,44 @@ const fetchNews = async (): Promise<NewsResponse> => {
 };
 
 export default function HomeScreen() {
-  const headerHeight = useHeaderHeight();
+  const setArticles = useArticlesStore((s) => s.setArticles);
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["news"],
-    queryFn: fetchNews,
+    queryKey: ["articles"],
+    queryFn: fetchArticles,
     staleTime: 15 * 60 * 1000,
     gcTime: 15 * 60 * 1000,
   });
+
+  useEffect(() => {
+    if (data) {
+      setArticles(data.articles.map(mapArticle));
+    }
+  }, [data, setArticles]);
 
   if (isLoading) {
     return (
       <View style={styles.container}>
         <StatusBar style="dark" />
-        <NewsShimmer />
+        <ArticleShimmer />
       </View>
     );
   }
 
-  if (error) {
-    return (
-      <View style={[styles.center, { paddingBottom: headerHeight }]}>
-        <StatusBar style="dark" />
-        <Image source={require("@/assets/images/error.png")} style={styles.image} />
-        <Text style={styles.title}>Something went wrong!</Text>
-        <Text style={styles.subtitle}>Could not fetch the requested resource.</Text>
-        <TouchableOpacity onPress={() => refetch()}>
-          <Text style={{ fontWeight: "bold", fontSize: 16 }}>Retry Now</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  if (error) return <ErrorBanner onRefresh={() => refetch()} />;
 
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       <FlashList
         data={data?.articles}
-        renderItem={({ item, index }) =>
-          index === 0 ? <PrimaryNewsCard article={item} /> : <NewsCard article={item} />
-        }
+        renderItem={({ item, index }) => {
+          const article = mapArticle(item);
+          return index === 0 ? (
+            <PrimaryArticleCard article={article} />
+          ) : (
+            <ArticleCard article={article} />
+          );
+        }}
         keyExtractor={(item, index) => item.url || index.toString()}
         contentContainerStyle={styles.listContent}
         onRefresh={refetch}
@@ -74,29 +74,6 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     backgroundColor: theme.colors.background,
     paddingHorizontal: 10,
-  },
-  center: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 5,
-  },
-  title: {
-    fontSize: 24,
-    fontFamily: theme.fonts.primary.bold,
-    color: theme.colors.text,
-    marginBottom: theme.spacing.xs,
-  },
-  subtitle: {
-    fontSize: 16,
-    fontFamily: theme.fonts.primary.regular,
-    color: theme.colors.textSecondary,
-    marginBottom: 20,
-  },
-  image: {
-    width: 120,
-    height: 120,
-    marginBottom: 20,
   },
   listContent: {
     paddingBottom: 120,

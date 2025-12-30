@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles";
 
 import { ShimmerView } from "@/components/ui/shimmer-view";
 
-export const NewsShimmer = () => {
+export const ArticleShimmer = () => {
   return (
     <ShimmerProvider>
       <View style={styles.container}>

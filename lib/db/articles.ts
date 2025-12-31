@@ -44,6 +44,12 @@ export function isArticleSaved(url: string): boolean {
   return !!row;
 }
 
+export function clearArticles() {
+  db.runSync(`
+    DELETE FROM articles
+  `);
+}
+
 export function fetchSavedArticles(): Article[] {
   return db.getAllSync<Article>(`
     SELECT * FROM articles

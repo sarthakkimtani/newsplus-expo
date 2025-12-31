@@ -1,11 +1,12 @@
 import { useClerk, useUser } from "@clerk/clerk-expo";
 import * as Application from "expo-application";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 import { SettingsTile } from "@/components/ui/settings-tile";
-import { useRouter } from "expo-router";
+import { clearArticles } from "@/lib/db/articles";
 
 export default function SettingsScreen() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +19,7 @@ export default function SettingsScreen() {
   const handleSignout = async () => {
     try {
       setIsLoading(true);
+      clearArticles();
       await signOut();
       setIsLoading(false);
     } catch (err) {

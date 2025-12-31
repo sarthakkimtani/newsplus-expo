@@ -9,7 +9,7 @@ export const TabsHeader = () => {
 
   return (
     <View style={styles.headerRight}>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => router.push("/saved")}>
         <Ionicons name="bookmark-outline" size={24} color={theme.colors.text} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push("/settings")}>

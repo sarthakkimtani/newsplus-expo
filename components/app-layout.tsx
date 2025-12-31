@@ -59,6 +59,14 @@ export const AppLayout = () => {
             headerRight: () => <WebviewHeader params={route.params} />,
           })}
         />
+        <Stack.Screen
+          name="saved"
+          options={{
+            headerTitle: "Saved Articles",
+            headerBackButtonDisplayMode: "minimal",
+            headerShadowVisible: false,
+          }}
+        />
       </Stack.Protected>
     </Stack>
   );

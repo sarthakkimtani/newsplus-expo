@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { Watchlist } from "@/components/screens/tabs/watchlist";
 
 export default function WatchlistScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Watchlist</Text>
-    </View>
-  );
+  return <Watchlist />;
 }

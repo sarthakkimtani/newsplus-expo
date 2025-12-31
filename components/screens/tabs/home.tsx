@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
+import { StateBanner } from "@/components/common/state-banner";
 import { ArticleCard } from "@/components/screens/tabs/article/article-card";
 import { ArticleShimmer } from "@/components/screens/tabs/article/article-shimmer";
-import { ErrorBanner } from "@/components/screens/tabs/article/error-banner";
 import { PrimaryArticleCard } from "@/components/screens/tabs/article/primary-article-card";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
 import { ArticleResponse, mapArticle } from "@/utils/types/article";
@@ -44,7 +44,7 @@ export const Home = () => {
     );
   }
 
-  if (error) return <ErrorBanner onRefresh={() => refetch()} />;
+  if (error) return <StateBanner state="error" onRefresh={() => refetch()} />;
 
   return (
     <View style={styles.container}>

@@ -4,22 +4,34 @@ import { StatusBar } from "expo-status-bar";
 import { GestureResponderEvent, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
-export const ErrorBanner = ({
+export const StateBanner = ({
+  state,
   onRefresh,
 }: {
-  onRefresh: ((event: GestureResponderEvent) => void) | undefined;
+  state: "empty" | "error";
+  onRefresh?: ((event: GestureResponderEvent) => void) | undefined;
 }) => {
   const headerHeight = useHeaderHeight();
+  const isError = state === "error";
 
   return (
     <View style={[styles.center, { paddingBottom: headerHeight }]}>
       <StatusBar style="dark" />
-      <Image source={require("@/assets/images/error.png")} style={styles.image} />
-      <Text style={styles.title}>Something went wrong!</Text>
-      <Text style={styles.subtitle}>Could not fetch the requested resource.</Text>
-      <TouchableOpacity onPress={onRefresh}>
-        <Text style={{ fontWeight: "bold", fontSize: 16 }}>Retry Now</Text>
-      </TouchableOpacity>
+      <Image
+        source={
+          isError ? require("@/assets/images/error.png") : require("@/assets/images/empty.png")
+        }
+        style={styles.image}
+      />
+      <Text style={styles.title}>{isError ? "Something went wrong!" : "Uh oh..."}</Text>
+      <Text style={styles.subtitle}>
+        {isError ? "Could not fetch the requested resource." : "Nothing here yet."}
+      </Text>
+      {isError && (
+        <TouchableOpacity onPress={onRefresh}>
+          <Text style={{ fontWeight: "bold", fontSize: 16 }}>Retry Now</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

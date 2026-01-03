@@ -9,16 +9,9 @@ import { StateBanner } from "@/components/common/state-banner";
 import { ArticleCard } from "@/components/screens/tabs/article/article-card";
 import { ArticleShimmer } from "@/components/screens/tabs/article/article-shimmer";
 import { PrimaryArticleCard } from "@/components/screens/tabs/article/primary-article-card";
+import { fetchArticles } from "@/lib/api-client";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
-import { ArticleResponse, mapArticle } from "@/utils/types/article";
-
-const fetchArticles = async (): Promise<ArticleResponse> => {
-  const response = await fetch("/api/news");
-  if (!response.ok) {
-    throw new Error("Network response error");
-  }
-  return response.json();
-};
+import { mapArticle } from "@/utils/types/article";
 
 export const Home = () => {
   const setArticles = useArticlesStore((s) => s.setArticles);

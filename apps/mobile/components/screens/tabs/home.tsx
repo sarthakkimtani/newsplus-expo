@@ -11,7 +11,6 @@ import { ArticleShimmer } from "@/components/screens/tabs/article/article-shimme
 import { PrimaryArticleCard } from "@/components/screens/tabs/article/primary-article-card";
 import { fetchArticles } from "@/lib/api-client";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
-import { mapArticle } from "@/utils/types/article";
 
 export const Home = () => {
   const setArticles = useArticlesStore((s) => s.setArticles);
@@ -24,7 +23,7 @@ export const Home = () => {
 
   useEffect(() => {
     if (data) {
-      setArticles(data.articles.map(mapArticle));
+      setArticles(data);
     }
   }, [data, setArticles]);
 
@@ -43,15 +42,10 @@ export const Home = () => {
     <View style={styles.container}>
       <StatusBar style="dark" />
       <FlashList
-        data={data?.articles}
-        renderItem={({ item, index }) => {
-          const article = mapArticle(item);
-          return index === 0 ? (
-            <PrimaryArticleCard article={article} />
-          ) : (
-            <ArticleCard article={article} />
-          );
-        }}
+        data={data}
+        renderItem={({ item, index }) =>
+          index === 0 ? <PrimaryArticleCard article={item} /> : <ArticleCard article={item} />
+        }
         keyExtractor={(item, index) => item.url || index.toString()}
         contentContainerStyle={styles.listContent}
         onRefresh={refetch}

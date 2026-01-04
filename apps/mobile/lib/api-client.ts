@@ -1,4 +1,4 @@
-import { ArticleResponse } from "@/utils/types/article";
+import type { Headline } from "@newsplus/schemas";
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const baseUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
@@ -19,6 +19,6 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json();
 }
 
-export const fetchArticles = async (): Promise<ArticleResponse> => {
-  return apiFetch<ArticleResponse>("/news");
+export const fetchArticles = async (): Promise<Headline> => {
+  return apiFetch<Headline>("/news");
 };

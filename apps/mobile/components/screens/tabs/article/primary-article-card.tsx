@@ -1,10 +1,10 @@
+import type { Article } from "@newsplus/schemas";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 import { relativeDate } from "@/utils/date";
-import { Article } from "@/utils/types/article";
 
 export const PrimaryArticleCard = ({ article }: { article: Article }) => {
   const router = useRouter();

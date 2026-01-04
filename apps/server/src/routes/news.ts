@@ -1,3 +1,4 @@
+import { HeadlineSchema } from "@newsplus/schemas";
 import { Request, Response, Router } from "express";
 
 const router = Router();
@@ -18,8 +19,14 @@ router.get("/", async (_req: Request, res: Response) => {
       return;
     }
 
-    const data = await response.json();
-    res.json(data);
+    const { articles } = await response.json();
+    const result = HeadlineSchema.safeParse(articles);
+    if (!result.success) {
+      console.error(result.error);
+      res.status(502).json({ error: "Data parsing failed" });
+    }
+
+    res.json(result.data);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     res.status(500).json({ error: "Failed to fetch news", message });

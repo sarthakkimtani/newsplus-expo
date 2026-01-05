@@ -1,4 +1,4 @@
-import type { Headline } from "@newsplus/schemas";
+import type { EodData, Headline } from "@newsplus/schemas";
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const baseUrl = process.env.EXPO_PUBLIC_BACKEND_URL;
@@ -21,4 +21,8 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const fetchArticles = async (): Promise<Headline> => {
   return apiFetch<Headline>("/news");
+};
+
+export const fetchStocks = async (): Promise<EodData> => {
+  return apiFetch<EodData>("/stocks/eod");
 };

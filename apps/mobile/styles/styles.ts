@@ -11,6 +11,12 @@ export const lightTheme = {
     outline: "#e5e5e5",
     danger: "#E53935",
     white: "#FFFFFF",
+    positive: "#16A34A",
+    positiveSurface: "#DCFCE7",
+    negative: "#DC2626",
+    negativeSurface: "#FEE2E2",
+    neutral: "#6B7280",
+    neutralSurface: "#F3F4F6",
   },
   spacing: {
     xs: 4,

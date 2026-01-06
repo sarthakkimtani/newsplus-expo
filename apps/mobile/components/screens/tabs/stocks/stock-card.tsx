@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { EodData } from "@newsplus/schemas";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
@@ -9,15 +10,24 @@ import { CompanyLogo } from "@/components/screens/tabs/stocks/company-logo";
 type StockItem = EodData[number];
 
 export const StockCard = ({ stock }: { stock: StockItem }) => {
-  const theme = UnistylesRuntime.getTheme();
   const [showOhlc, setShowOhlc] = useState(false);
+  const theme = UnistylesRuntime.getTheme();
+  const router = useRouter();
+
   const priceChange = stock.close - stock.open;
   const priceChangePercent = ((priceChange / stock.open) * 100).toFixed(2);
   const isPositive = priceChange > 0;
   const isNegative = priceChange < 0;
 
+  const handlePress = () => {
+    router.push(`/stocks/${stock.symbol}`);
+  };
+
   return (
-    <View style={styles.card}>
+    <Pressable
+      onPress={handlePress}
+      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+    >
       <View style={styles.cardHeader}>
         <View style={styles.stockInfo}>
           <View style={styles.row}>
@@ -82,7 +92,7 @@ export const StockCard = ({ stock }: { stock: StockItem }) => {
           </View>
         </View>
       )}
-    </View>
+    </Pressable>
   );
 };
 
@@ -93,6 +103,10 @@ export const styles = StyleSheet.create((theme) => ({
     padding: theme.spacing.md,
     borderWidth: 1,
     borderColor: theme.colors.outline,
+  },
+  pressed: {
+    transform: [{ scale: 0.97 }],
+    opacity: 0.85,
   },
   cardHeader: {
     flexDirection: "row",

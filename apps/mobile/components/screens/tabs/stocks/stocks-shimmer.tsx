@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native-unistyles";
 export const StockShimmer = () => {
   return (
     <View style={styles.container}>
-      {Array.from({ length: 6 }).map((_, index) => (
+      {Array.from({ length: 7 }).map((_, index) => (
         <View key={index} style={styles.shimmerCard}>
           <View style={styles.shimmerHeader}>
             <View style={styles.shimmerInfo}>
@@ -17,11 +17,6 @@ export const StockShimmer = () => {
               <ShimmerView width={55} height={24} />
             </View>
           </View>
-          <View style={styles.shimmerOhlc}>
-            {Array.from({ length: 4 }).map((_, i) => (
-              <ShimmerView key={i} width={50} height={32} />
-            ))}
-          </View>
         </View>
       ))}
     </View>
@@ -32,7 +27,6 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    paddingHorizontal: theme.spacing.lg,
   },
   shimmerCard: {
     backgroundColor: theme.colors.surface,
@@ -59,12 +53,5 @@ const styles = StyleSheet.create((theme) => ({
   },
   shimmerPrice: {
     marginBottom: 6,
-  },
-  shimmerOhlc: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: theme.colors.background,
-    borderRadius: theme.borderRadius.sm,
-    padding: theme.spacing.sm,
   },
 }));

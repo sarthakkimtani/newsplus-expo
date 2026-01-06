@@ -1,4 +1,5 @@
-import { ActivityIndicator, Pressable, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 interface ElevatedButtonProps {
@@ -6,6 +7,7 @@ interface ElevatedButtonProps {
   onPress: () => void;
   isLoading?: boolean;
   disabled?: boolean;
+  icon?: keyof typeof Ionicons.glyphMap;
 }
 
 export function ElevatedButton({
@@ -13,6 +15,7 @@ export function ElevatedButton({
   onPress,
   isLoading = false,
   disabled = false,
+  icon,
 }: ElevatedButtonProps) {
   return (
     <Pressable
@@ -24,7 +27,14 @@ export function ElevatedButton({
       onPress={onPress}
       disabled={disabled || isLoading}
     >
-      {isLoading ? <ActivityIndicator color={"#FFF"} /> : <Text style={styles.text}>{title}</Text>}
+      {isLoading ? (
+        <ActivityIndicator color={"#FFF"} />
+      ) : (
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Ionicons name={icon} size={24} color={"#FFF"} />
+          <Text style={styles.text}>{title}</Text>
+        </View>
+      )}
     </Pressable>
   );
 }

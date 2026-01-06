@@ -64,7 +64,12 @@ export const Ticker = () => {
           </Pressable>
         </View>
       )}
-      <TickerHeader ticker={profile?.ticker!} name={profile?.name} />
+      <TickerHeader
+        ticker={profile?.ticker!}
+        name={profile?.name}
+        isInWatchlist={false}
+        onWatchlistToggle={() => {}}
+      />
 
       <TickerStats
         industry={profile?.industry}

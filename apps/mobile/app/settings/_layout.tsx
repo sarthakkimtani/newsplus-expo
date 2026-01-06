@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useNavigation } from "expo-router";
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform, Pressable } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 export default function SettingsLayout() {
@@ -33,9 +33,9 @@ const CloseButton = () => {
   const theme = UnistylesRuntime.getTheme();
   const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.closeButton} onPress={() => navigation.getParent()?.goBack()}>
+    <Pressable style={styles.closeButton} onPress={() => navigation.getParent()?.goBack()}>
       <Ionicons name="close" size={24} color={theme.colors.text} />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

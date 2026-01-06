@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 import { deleteArticle, isArticleSaved, saveArticle } from "@/lib/db/articles";
@@ -38,13 +38,13 @@ export const WebviewHeader = ({ params }: HeaderProps) => {
 
   return (
     <View style={styles.headerRight}>
-      <TouchableOpacity onPress={toggleSave}>
+      <Pressable onPress={toggleSave}>
         <Ionicons
           name={saved ? "bookmark" : "bookmark-outline"}
           size={24}
           color={theme.colors.text}
         />
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { CompanyLogo } from "@/components/screens/tabs/stocks/company-logo";
+import { CompanyLogo } from "@/components/features/stocks/company-logo";
 
 type StockItem = EodData[number];
 

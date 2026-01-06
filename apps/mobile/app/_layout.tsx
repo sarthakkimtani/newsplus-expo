@@ -3,7 +3,7 @@ import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as SplashScreen from "expo-splash-screen";
 
-import { AppLayout } from "@/components/app-layout";
+import { AppLayout } from "@/components/layouts/app-layout";
 
 const queryClient = new QueryClient();
 

@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { TickerAbout } from "@/components/screens/tabs/stocks/ticker-about";
-import { TickerHeader } from "@/components/screens/tabs/stocks/ticker-header";
-import { TickerStats } from "@/components/screens/tabs/stocks/ticker-stats";
+import { TickerAbout } from "@/components/features/stocks/ticker-about";
+import { TickerHeader } from "@/components/features/stocks/ticker-header";
+import { TickerStats } from "@/components/features/stocks/ticker-stats";
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { fetchStockProfile } from "@/lib/api-client";
 

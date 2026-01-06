@@ -1,5 +1,5 @@
-import AuthScreen from "@/components/screens/auth/auth-screen";
+import { Auth } from "@/components/screens/auth";
 
 export default function LoginScreen() {
-  return <AuthScreen mode="login" />;
+  return <Auth mode="login" />;
 }

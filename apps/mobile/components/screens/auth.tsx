@@ -4,12 +4,12 @@ import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { StyleSheet } from "react-native-unistyles";
 
-import { Banner } from "@/components/screens/auth/banner";
-import { LoginForm } from "@/components/screens/auth/login-form";
-import { SignupForm } from "@/components/screens/auth/signup-form";
-import { VerifyEmailForm } from "@/components/screens/auth/verify-email-form";
+import { Banner } from "@/components/features/auth/banner";
+import { LoginForm } from "@/components/features/auth/login-form";
+import { SignupForm } from "@/components/features/auth/signup-form";
+import { VerifyEmailForm } from "@/components/features/auth/verify-email-form";
 
-export default function AuthScreen({ mode }: { mode: "login" | "signup" }) {
+export const Auth = ({ mode }: { mode: "login" | "signup" }) => {
   const [pending, setPending] = useState(false);
   const isLogin = mode === "login";
 
@@ -55,7 +55,7 @@ export default function AuthScreen({ mode }: { mode: "login" | "signup" }) {
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create((theme) => ({
   screen: {

@@ -1,4 +1,4 @@
-import { StatRow } from "@/components/screens/tabs/stocks/stat-row";
+import { StatRow } from "@/components/features/stocks/stat-row";
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";

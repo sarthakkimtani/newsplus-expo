@@ -4,8 +4,8 @@ import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
-import { StateBanner } from "@/components/common/state-banner";
-import { ArticleCard } from "@/components/screens/tabs/article/article-card";
+import { ArticleCard } from "@/components/features/articles/article-card";
+import { StateBanner } from "@/components/ui/state-banner";
 import { fetchSavedArticles } from "@/lib/db/articles";
 import { Article } from "@/utils/types/article";
 

@@ -4,9 +4,9 @@ import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
-import { StateBanner } from "@/components/common/state-banner";
-import { StockCard } from "@/components/screens/tabs/stocks/stock-card";
-import { StockShimmer } from "@/components/screens/tabs/stocks/stocks-shimmer";
+import { StockCard } from "@/components/features/stocks/stock-card";
+import { StockShimmer } from "@/components/features/stocks/stocks-shimmer";
+import { StateBanner } from "@/components/ui/state-banner";
 import { fetchStocks } from "@/lib/api-client";
 
 export const Stocks = () => {

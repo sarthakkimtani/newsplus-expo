@@ -4,8 +4,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { UnistylesRuntime } from "react-native-unistyles";
 
-import { TabsHeader } from "@/components/header/tabs-header";
-import { WebviewHeader } from "@/components/header/webview-header";
+import { TabsHeader } from "@/components/features/navigation/tabs-header";
+import { WebviewHeader } from "@/components/features/navigation/webview-header";
 import { initDatabase } from "@/lib/db";
 
 export const AppLayout = () => {

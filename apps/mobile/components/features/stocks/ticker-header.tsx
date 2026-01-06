@@ -1,4 +1,4 @@
-import { CompanyLogo } from "@/components/screens/tabs/stocks/company-logo";
+import { CompanyLogo } from "@/components/features/stocks/company-logo";
 import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 

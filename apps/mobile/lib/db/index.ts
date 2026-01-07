@@ -16,5 +16,11 @@ export function initDatabase() {
       urlToImage TEXT,
       publishedAt TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS tickers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      symbol TEXT NOT NULL UNIQUE,
+      name TEXT
+    );
   `);
 }

@@ -1,31 +1,41 @@
 import { FlashList } from "@shopify/flash-list";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
-import { View } from "react-native";
+import { useCallback } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 import { ArticleCard } from "@/components/features/articles/article-card";
 import { StateBanner } from "@/components/ui/state-banner";
 import { fetchSavedArticles } from "@/lib/db/articles";
-import { Article } from "@/utils/types/article";
 
 export const Saved = () => {
-  const [articles, setArticles] = useState<Article[]>([]);
+  const queryClient = useQueryClient();
+  const { data, error, refetch, isLoading } = useQuery({
+    queryKey: ["savedArticles"],
+    queryFn: fetchSavedArticles,
+  });
 
   useFocusEffect(
     useCallback(() => {
-      setArticles(fetchSavedArticles());
-    }, [])
+      queryClient.invalidateQueries({
+        queryKey: ["savedArticles"],
+      });
+    }, [queryClient])
   );
+
+  if (isLoading) return <ActivityIndicator size="large" />;
+  if (error) return <StateBanner state="error" />;
 
   return (
     <View style={styles.container}>
       <FlashList
-        data={articles}
+        data={data}
         renderItem={({ item }) => <ArticleCard article={item} />}
         keyExtractor={(item, index) => item.url || index.toString()}
-        contentContainerStyle={articles.length > 0 ? styles.listContent : styles.empty}
+        contentContainerStyle={data!.length > 0 ? styles.listContent : styles.empty}
         showsVerticalScrollIndicator={false}
+        onRefresh={refetch}
         ListEmptyComponent={<StateBanner state="empty" />}
       />
     </View>

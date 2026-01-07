@@ -16,6 +16,7 @@ import { TickerAbout } from "@/components/features/stocks/ticker-about";
 import { TickerHeader } from "@/components/features/stocks/ticker-header";
 import { TickerStats } from "@/components/features/stocks/ticker-stats";
 import { ElevatedButton } from "@/components/ui/elevated-button";
+import { useTickerPersistedToggle } from "@/hooks/use-ticker-persisted-toggle";
 import { fetchStockProfile } from "@/lib/api-client";
 
 export const Ticker = () => {
@@ -35,7 +36,9 @@ export const Ticker = () => {
     gcTime: 60 * 60 * 1000,
   });
 
-  if (isLoading) {
+  const tickerSaver = useTickerPersistedToggle(ticker, profile?.name);
+
+  if (isLoading || tickerSaver.isLoading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={theme.colors.primary} />
@@ -67,8 +70,9 @@ export const Ticker = () => {
       <TickerHeader
         ticker={profile?.ticker!}
         name={profile?.name}
-        isInWatchlist={false}
-        onWatchlistToggle={() => {}}
+        saved={tickerSaver.isSaved}
+        isLoading={tickerSaver.isToggling}
+        onWatchlistToggle={tickerSaver.toggle}
       />
 
       <TickerStats

@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 import { CompanyLogo } from "@/components/features/stocks/company-logo";
@@ -7,14 +7,18 @@ import { CompanyLogo } from "@/components/features/stocks/company-logo";
 interface TickerHeaderProps {
   ticker: string;
   name?: string;
-  isInWatchlist?: boolean;
+  saved?: boolean;
+  isLoading?: boolean;
+  disabled?: boolean;
   onWatchlistToggle?: () => void;
 }
 
 export const TickerHeader = ({
   ticker,
   name,
-  isInWatchlist = false,
+  saved = false,
+  isLoading = false,
+  disabled = false,
   onWatchlistToggle,
 }: TickerHeaderProps) => {
   const theme = UnistylesRuntime.getTheme();
@@ -30,20 +34,24 @@ export const TickerHeader = ({
       <Pressable
         style={({ pressed }) => [
           styles.watchlistButton,
-          isInWatchlist && styles.watchlistButtonActive,
-          pressed && styles.watchlistButtonPressed,
+          saved && styles.watchlistButtonActive,
+          pressed && !disabled && styles.watchlistButtonPressed,
+          disabled && styles.watchlistButtonDisabled,
         ]}
         onPress={onWatchlistToggle}
+        disabled={disabled || isLoading}
       >
-        <Ionicons
-          name={isInWatchlist ? "checkmark-circle" : "add-circle-outline"}
-          size={20}
-          color={isInWatchlist ? "#FFF" : theme.colors.primary}
-        />
-        <Text
-          style={[styles.watchlistButtonText, isInWatchlist && styles.watchlistButtonTextActive]}
-        >
-          {isInWatchlist ? "In Watchlist" : "Add to Watchlist"}
+        {isLoading ? (
+          <ActivityIndicator size="small" color={saved ? "#FFF" : theme.colors.primary} />
+        ) : (
+          <Ionicons
+            name={saved ? "checkmark-circle" : "add-circle-outline"}
+            size={20}
+            color={saved ? "#FFF" : theme.colors.primary}
+          />
+        )}
+        <Text style={[styles.watchlistButtonText, saved && styles.watchlistButtonTextActive]}>
+          {saved ? "In Watchlist" : "Add to Watchlist"}
         </Text>
       </Pressable>
     </View>
@@ -99,6 +107,9 @@ const styles = StyleSheet.create((theme) => ({
   watchlistButtonPressed: {
     opacity: 0.8,
     transform: [{ scale: 0.98 }],
+  },
+  watchlistButtonDisabled: {
+    opacity: 0.6,
   },
   watchlistButtonText: {
     fontSize: 15,

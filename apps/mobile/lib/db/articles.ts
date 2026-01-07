@@ -1,8 +1,9 @@
-import { db } from "@/lib/db";
-import { Article } from "@/utils/types/article";
+import { Article } from "@newsplus/schemas";
 
-export function saveArticle(article: Article) {
-  db.runSync(
+import { db } from "@/lib/db";
+
+export async function saveArticle(article: Article): Promise<void> {
+  await db.runAsync(
     `
     INSERT OR IGNORE INTO articles
     (source, author, title, description, url, urlToImage, publishedAt)
@@ -20,8 +21,8 @@ export function saveArticle(article: Article) {
   );
 }
 
-export function deleteArticle(url: string) {
-  db.runSync(
+export async function deleteArticle(url: string): Promise<void> {
+  await db.runAsync(
     `
     DELETE FROM articles
     WHERE url = ?
@@ -30,8 +31,8 @@ export function deleteArticle(url: string) {
   );
 }
 
-export function isArticleSaved(url: string): boolean {
-  const row = db.getFirstSync<{ id: number }>(
+export async function isArticleSaved(url: string): Promise<boolean> {
+  const row = await db.getFirstAsync<{ id: number }>(
     `
     SELECT id
     FROM articles
@@ -44,13 +45,13 @@ export function isArticleSaved(url: string): boolean {
   return !!row;
 }
 
-export function clearArticles() {
-  db.runSync(`
+export async function clearArticles(): Promise<void> {
+  await db.runAsync(`
     DELETE FROM articles
   `);
 }
 
-export function fetchSavedArticles(): Article[] {
+export async function fetchSavedArticles(): Promise<Article[]> {
   return db.getAllSync<Article>(`
     SELECT * FROM articles
     ORDER BY publishedAt DESC

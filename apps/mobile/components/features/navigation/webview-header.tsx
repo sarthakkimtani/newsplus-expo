@@ -1,9 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { deleteArticle, isArticleSaved, saveArticle } from "@/lib/db/articles";
+import { useArticlePersistedToggle } from "@/hooks/use-article-persisted-toggle";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
 
 interface HeaderProps {
@@ -14,33 +13,16 @@ interface HeaderProps {
 
 export const WebviewHeader = ({ params }: HeaderProps) => {
   const getArticleByUrl = useArticlesStore((s) => s.getArticleByUrl);
-  const [saved, setSaved] = useState(false);
   const theme = UnistylesRuntime.getTheme();
-  const url = params?.url;
 
-  useEffect(() => {
-    if (!url) return;
-    setSaved(isArticleSaved(url));
-  }, [url]);
-
-  const toggleSave = () => {
-    if (!url) return;
-
-    if (saved) {
-      deleteArticle(url);
-      setSaved(false);
-    } else {
-      const article = getArticleByUrl(url);
-      saveArticle(article!);
-      setSaved(true);
-    }
-  };
+  const article = getArticleByUrl(params?.url!);
+  const articleSaver = useArticlePersistedToggle(article);
 
   return (
     <View style={styles.headerRight}>
-      <Pressable onPress={toggleSave}>
+      <Pressable onPress={articleSaver.toggle}>
         <Ionicons
-          name={saved ? "bookmark" : "bookmark-outline"}
+          name={articleSaver.isSaved ? "bookmark" : "bookmark-outline"}
           size={24}
           color={theme.colors.text}
         />

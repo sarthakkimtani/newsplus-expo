@@ -1,135 +1,102 @@
-# Turborepo starter
+# News+
 
-This Turborepo starter is maintained by the Turborepo core team.
+**Business & Financial News at Your Fingertips**
 
-## Using this example
+News+ is a modern mobile application designed to deliver business and financial news with powerful features like article saving, stock watchlists, and personalized content curation.
 
-Run the following command:
+## Features
 
-```sh
-npx create-turbo@latest
-```
+- 🌍 **Global News Coverage** — Dive into a vast collection of news articles from around the globe
+- 📖 **Seamless Reading Experience** — Enjoy a clean and intuitive interface for distraction-free reading
+- 💾 **Save for Later** — Save your favorite articles to read later
+- 📈 **Stock Watchlist** — Stay ahead of the curve by creating your personalized stock watchlist
+- 📚 **Personalized Library** — Create a curated collection of articles that matter to you
+- 🔐 **Authentication** — Secure login and signup with Clerk authentication
 
-## What's inside?
+## Project Structure
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+This is a monorepo powered by [Turborepo](https://turborepo.com/) and [pnpm](https://pnpm.io/).
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+newsplus/
+├── apps/
+│   ├── mobile/          # React Native (Expo) mobile app
+│   └── server/          # Express.js backend API
+├── packages/
+│   └── schemas/         # Shared Zod schemas for type-safe APIs
+├── turbo.json           # Turborepo configuration
+└── package.json         # Root package configuration
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### Prerequisites
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+- [Node.js](https://nodejs.org/) >= 18
+- [pnpm](https://pnpm.io/) 9.0.0 or later
+- [Xcode](https://developer.apple.com/xcode/) (for iOS development)
+- [Android Studio](https://developer.android.com/studio) (for Android development)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+### Installation
 
-### Develop
+1. **Clone the repository**
 
-To develop all apps and packages, run the following command:
+   ```bash
+   git clone https://github.com/sarthakkimtani/newsplus-expo.git
+   cd newsplus
+   ```
 
-```
-cd my-turborepo
+2. **Install dependencies**
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+   ```bash
+   pnpm install
+   ```
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+3. **Set up environment variables**
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+   Create `.env` files in the respective app directories:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+   ```bash
+   # apps/server/.env
+   PORT=3000
+   NEWS_API_KEY=your_news_api_key
+   STOCKS_API_KEY=your_stocks_api_key
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+   # apps/mobile/.env.local
+   EXPO_PUBLIC_BACKEND_URL=http://localhost:3000
+   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+   ```
 
-### Remote Caching
+4. **Build shared packages**
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+   ```bash
+   pnpm build
+   ```
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Development
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+Run all apps and packages in development mode:
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+pnpm dev
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Or run specific apps:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+```bash
+# Run only the mobile app
+pnpm dev --filter=mobile
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+# Run only the server
+pnpm dev --filter=server
 ```
 
-## Useful Links
+### Building
 
-Learn more about the power of Turborepo:
+Build all apps and packages:
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```bash
+pnpm build
+```
+
+## License
+
+MIT

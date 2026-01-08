@@ -27,7 +27,6 @@ export async function isTickerSaved(symbol: string): Promise<boolean> {
 export async function fetchSavedTickers(): Promise<Ticker[]> {
   return db.getAllAsync<Ticker>(`
     SELECT * FROM tickers
-    ORDER BY addedAt DESC
   `);
 }
 

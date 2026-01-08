@@ -1,36 +1,8 @@
-import { HeadlineSchema } from "@newsplus/schemas";
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import { getHeadlines } from "../controllers";
 
 const router = Router();
 
-router.get("/", async (_req: Request, res: Response) => {
-  const url = "https://newsapi.org/v2/top-headlines?category=business";
-
-  try {
-    const response = await fetch(url, {
-      headers: {
-        "X-Api-Key": process.env.NEWS_API_KEY as string,
-      },
-    });
-
-    if (!response.ok) {
-      const text = await response.text();
-      res.status(response.status).json({ error: "API error", message: text });
-      return;
-    }
-
-    const { articles } = await response.json();
-    const result = HeadlineSchema.safeParse(articles);
-    if (!result.success) {
-      console.error(result.error);
-      res.status(502).json({ error: "Data parsing failed" });
-    }
-
-    res.json(result.data);
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    res.status(500).json({ error: "Failed to fetch news", message });
-  }
-});
+router.get("/", getHeadlines);
 
 export default router;

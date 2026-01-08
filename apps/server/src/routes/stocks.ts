@@ -1,75 +1,27 @@
-import { EodDataSchema, StockProfileSchema } from "@newsplus/schemas";
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+
+import { DEFAULT_TICKERS } from "../config";
+import { getEodData, getStockProfile } from "../controllers";
 
 const router = Router();
-const baseUrl = "https://api.marketstack.com/v2";
-const key = process.env.STOCKS_API_KEY;
 
-router.get("/eod", async (_req: Request, res: Response) => {
-  const tickers: string[] = [
-    "AAPL",
-    "MSFT",
-    "NVDA",
-    "GOOGL",
-    "AVGO",
-    "ORCL",
-    "CRM",
-    "INTC",
-    "QCOM",
-    "NFLX",
-  ];
-  const symbols = tickers.join(",");
+const parseTickers = (tickers?: string) =>
+  tickers
+    ?.split(",")
+    .map((t) => t.trim().toUpperCase())
+    .filter(Boolean);
 
-  try {
-    const url = `${baseUrl}/eod/latest?access_key=${key}&symbols=${symbols}`;
-    const response = await fetch(url);
+router.get("/eod", (req, res) => getEodData(req, res, [...DEFAULT_TICKERS]));
 
-    if (!response.ok) {
-      const text = await response.text();
-      res.status(response.status).json({ error: "API error", message: text });
-      return;
-    }
+router.get("/tickers/:symbol", getStockProfile);
 
-    const { data } = await response.json();
-    const result = EodDataSchema.safeParse(data);
-    if (!result.success) {
-      console.error(result.error);
-      res.status(502).json({ error: "Data parsing failed" });
-    }
-
-    res.json(result.data);
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    res.status(500).json({ error: "Failed to fetch stocks", message });
+router.get("/watchlist", (req, res) => {
+  const tickers = parseTickers(req.query.tickers as string);
+  if (!tickers?.length) {
+    return res.status(400).json({ error: "tickers query param required" });
   }
-});
 
-router.get("/tickers/:symbol", async (req: Request, res: Response) => {
-  const { symbol } = req.params;
-
-  try {
-    const url = `${baseUrl}/tickerinfo?access_key=${key}&ticker=${symbol}`;
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      const text = await response.text();
-      res.status(response.status).json({ error: "API error", message: text });
-      return;
-    }
-
-    const { data } = await response.json();
-    const result = StockProfileSchema.safeParse(data);
-    if (!result.success) {
-      console.error(result.error);
-      res.status(502).json({ error: "Data parsing failed" });
-    }
-
-    res.json(result.data);
-  } catch (err) {
-    console.error(err);
-    const message = err instanceof Error ? err.message : "Unknown error";
-    res.status(500).json({ error: "Failed to fetch stocks", message });
-  }
+  return getEodData(req, res, tickers);
 });
 
 export default router;

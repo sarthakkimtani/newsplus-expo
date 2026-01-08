@@ -1,12 +1,10 @@
 import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
-
-import newsRouter from "./routes/news";
-import stocksRouter from "./routes/stocks";
+import { env } from "./config";
+import { newsRouter, stocksRouter } from "./routes";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -18,6 +16,6 @@ app.get("/health", (_req, res) => {
 app.use("/news", newsRouter);
 app.use("/stocks", stocksRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(env.port, () => {
+  console.log(`Server running on port ${env.port}`);
 });

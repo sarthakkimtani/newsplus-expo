@@ -1,20 +1,11 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import {
-  ActivityIndicator,
-  Linking,
-  Platform,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { ActivityIndicator, Linking, Platform, ScrollView, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { TickerAbout } from "@/components/features/stocks/ticker-about";
-import { TickerHeader } from "@/components/features/stocks/ticker-header";
-import { TickerStats } from "@/components/features/stocks/ticker-stats";
+import { TickerAbout } from "@/components/features/ticker/ticker-about";
+import { TickerHeader } from "@/components/features/ticker/ticker-header";
+import { TickerStats } from "@/components/features/ticker/ticker-stats";
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { useTickerPersistedToggle } from "@/hooks/use-ticker-persisted-toggle";
 import { fetchStockProfile } from "@/lib/api-client";
@@ -22,7 +13,6 @@ import { fetchStockProfile } from "@/lib/api-client";
 export const Ticker = () => {
   const { ticker } = useLocalSearchParams<{ ticker: string }>();
   const theme = UnistylesRuntime.getTheme();
-  const router = useRouter();
 
   const {
     data: profile,
@@ -60,13 +50,6 @@ export const Ticker = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.contentContainer}
     >
-      {Platform.OS === "android" && (
-        <View style={styles.backContainer}>
-          <Pressable onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={24} />
-          </Pressable>
-        </View>
-      )}
       <TickerHeader
         ticker={profile?.ticker!}
         name={profile?.name}

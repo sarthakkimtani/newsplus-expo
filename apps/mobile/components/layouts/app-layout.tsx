@@ -2,6 +2,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Platform } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
 
 import { TabsHeader } from "@/components/features/navigation/tabs-header";
@@ -66,6 +67,16 @@ export const AppLayout = () => {
             headerBackButtonDisplayMode: "minimal",
             headerShadowVisible: false,
           }}
+        />
+        <Stack.Screen
+          name="ticker/[ticker]"
+          options={({ route }) => ({
+            headerTitle: "Stock Detail",
+            presentation: Platform.OS === "ios" ? "formSheet" : "card",
+            sheetAllowedDetents: [0.75, 1],
+            sheetGrabberVisible: true,
+            headerBackButtonDisplayMode: "minimal",
+          })}
         />
       </Stack.Protected>
     </Stack>

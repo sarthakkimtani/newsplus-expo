@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { CompanyLogo } from "@/components/features/stocks/company-logo";
+import { CompanyLogo } from "@/components/ui/company-logo";
 
 interface TickerHeaderProps {
   ticker: string;

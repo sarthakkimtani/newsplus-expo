@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { CompanyLogo } from "@/components/features/stocks/company-logo";
+import { CompanyLogo } from "@/components/ui/company-logo";
 
 type StockItem = EodData[number];
 
@@ -20,7 +20,7 @@ export const StockCard = ({ stock }: { stock: StockItem }) => {
   const isNegative = priceChange < 0;
 
   const handlePress = () => {
-    router.push(`/stocks/${stock.symbol}`);
+    router.push(`/ticker/${stock.symbol}`);
   };
 
   return (

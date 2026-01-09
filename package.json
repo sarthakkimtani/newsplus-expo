@@ -1,5 +1,5 @@
 {
-  "name": "newsplus",
+  "name": "newsplus-expo",
   "private": true,
   "scripts": {
     "build": "turbo run build",

@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Pressable, View } from "react-native";
 import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
-import { useArticlePersistedToggle } from "@/hooks/use-article-persisted-toggle";
+import { useArticlePersistedToggle } from "@/hooks/persistence/use-article-persisted-toggle";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
 
 interface HeaderProps {

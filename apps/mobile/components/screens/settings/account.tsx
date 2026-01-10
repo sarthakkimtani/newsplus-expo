@@ -6,7 +6,7 @@ import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
-import { useForm } from "@/hooks/use-form";
+import { useForm } from "@/hooks/form/use-form";
 import { nameChangeSchema } from "@/utils/auth-schema";
 
 export const Account = () => {

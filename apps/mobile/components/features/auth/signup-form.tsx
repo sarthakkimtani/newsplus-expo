@@ -3,8 +3,8 @@ import { Alert, View } from "react-native";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
-import { useClerkAuth } from "@/hooks/use-clerk-auth";
-import { useForm } from "@/hooks/use-form";
+import { useClerkAuth } from "@/hooks/auth/use-clerk-auth";
+import { useForm } from "@/hooks/form/use-form";
 import { signupSchema } from "@/utils/auth-schema";
 
 export const SignupForm = ({ onPending }: { onPending: () => void }) => {

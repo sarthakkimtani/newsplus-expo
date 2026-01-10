@@ -8,9 +8,10 @@ import { StyleSheet } from "react-native-unistyles";
 import { StockCard } from "@/components/features/stocks/stock-card";
 import { StockShimmer } from "@/components/features/stocks/stocks-shimmer";
 import { StateBanner } from "@/components/ui/state-banner";
-import { fetchWatchlist } from "@/lib/api-client";
+import { useApi } from "@/hooks/api/use-api";
 
 export const Watchlist = () => {
+  const { fetchWatchlist } = useApi();
   const queryClient = useQueryClient();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["watchlist"],

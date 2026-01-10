@@ -7,9 +7,10 @@ import { StyleSheet } from "react-native-unistyles";
 import { StockCard } from "@/components/features/stocks/stock-card";
 import { StockShimmer } from "@/components/features/stocks/stocks-shimmer";
 import { StateBanner } from "@/components/ui/state-banner";
-import { fetchStocks } from "@/lib/api-client";
+import { useApi } from "@/hooks/api/use-api";
 
 export const Stocks = () => {
+  const { fetchStocks } = useApi();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["stocks"],
     queryFn: fetchStocks,

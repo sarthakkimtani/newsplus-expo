@@ -7,10 +7,11 @@ import { TickerAbout } from "@/components/features/ticker/ticker-about";
 import { TickerHeader } from "@/components/features/ticker/ticker-header";
 import { TickerStats } from "@/components/features/ticker/ticker-stats";
 import { ElevatedButton } from "@/components/ui/elevated-button";
-import { useTickerPersistedToggle } from "@/hooks/use-ticker-persisted-toggle";
-import { fetchStockProfile } from "@/lib/api-client";
+import { useApi } from "@/hooks/api/use-api";
+import { useTickerPersistedToggle } from "@/hooks/persistence/use-ticker-persisted-toggle";
 
 export const Ticker = () => {
+  const { fetchStockProfile } = useApi();
   const { ticker } = useLocalSearchParams<{ ticker: string }>();
   const theme = UnistylesRuntime.getTheme();
 

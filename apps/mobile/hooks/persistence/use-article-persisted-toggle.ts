@@ -1,6 +1,6 @@
 import { Article } from "@newsplus/schemas";
 
-import { usePersistedToggle } from "@/hooks/use-persisted-toggle";
+import { usePersistedToggle } from "@/hooks/persistence/use-persisted-toggle";
 import { deleteArticle, isArticleSaved, saveArticle } from "@/lib/db/articles";
 
 export const useArticlePersistedToggle = (article: Article) =>

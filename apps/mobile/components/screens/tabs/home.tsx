@@ -9,10 +9,11 @@ import { ArticleCard } from "@/components/features/articles/article-card";
 import { ArticleShimmer } from "@/components/features/articles/article-shimmer";
 import { PrimaryArticleCard } from "@/components/features/articles/primary-article-card";
 import { StateBanner } from "@/components/ui/state-banner";
-import { fetchArticles } from "@/lib/api-client";
+import { useApi } from "@/hooks/api/use-api";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
 
 export const Home = () => {
+  const { fetchArticles } = useApi();
   const setArticles = useArticlesStore((s) => s.setArticles);
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["articles"],

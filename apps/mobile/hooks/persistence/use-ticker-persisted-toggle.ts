@@ -1,4 +1,4 @@
-import { usePersistedToggle } from "@/hooks/use-persisted-toggle";
+import { usePersistedToggle } from "@/hooks/persistence/use-persisted-toggle";
 import { deleteTicker, isTickerSaved, saveTicker } from "@/lib/db/stocks";
 
 export const useTickerPersistedToggle = (ticker: string, name?: string) =>

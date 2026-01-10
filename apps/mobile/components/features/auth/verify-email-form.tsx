@@ -3,7 +3,7 @@ import { Alert, View } from "react-native";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
-import { useClerkAuth } from "@/hooks/use-clerk-auth";
+import { useClerkAuth } from "@/hooks/auth/use-clerk-auth";
 
 export const VerifyEmailForm = () => {
   const { verifyEmail, getError } = useClerkAuth();

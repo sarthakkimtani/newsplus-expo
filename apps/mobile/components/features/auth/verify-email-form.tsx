@@ -1,3 +1,4 @@
+import { isClerkAPIResponseError } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 
@@ -5,8 +6,8 @@ import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
 import { useClerkAuth } from "@/hooks/auth/use-clerk-auth";
 
-export const VerifyEmailForm = () => {
-  const { verifyEmail, getError } = useClerkAuth();
+export const VerifyEmailForm = ({ mode }: { mode: "login" | "signup" }) => {
+  const { verifyEmail } = useClerkAuth();
 
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
@@ -20,9 +21,10 @@ export const VerifyEmailForm = () => {
 
     setLoading(true);
     try {
-      await verifyEmail(code);
-    } catch (e: any) {
-      Alert.alert("Error", getError(e, "Verification failed"));
+      await verifyEmail(code, mode);
+    } catch (e) {
+      if (isClerkAPIResponseError(e)) Alert.alert("Error", e.longMessage || e.message);
+      else if (e instanceof Error) Alert.alert("Error", e.message);
     } finally {
       setLoading(false);
     }

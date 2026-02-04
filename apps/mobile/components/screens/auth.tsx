@@ -10,8 +10,10 @@ import { SignupForm } from "@/components/features/auth/signup-form";
 import { VerifyEmailForm } from "@/components/features/auth/verify-email-form";
 
 export const Auth = ({ mode }: { mode: "login" | "signup" }) => {
-  const [pending, setPending] = useState(false);
+  const [verification, setVerification] = useState(false);
   const isLogin = mode === "login";
+
+  const enableVerification = () => setVerification(true);
 
   return (
     <KeyboardAwareScrollView
@@ -34,12 +36,12 @@ export const Auth = ({ mode }: { mode: "login" | "signup" }) => {
               {isLogin ? "Welcome back!" : "Welcome!"} Please enter your details.
             </Text>
 
-            {isLogin ? (
-              <LoginForm />
-            ) : pending ? (
-              <VerifyEmailForm />
+            {verification ? (
+              <VerifyEmailForm mode={mode} />
+            ) : isLogin ? (
+              <LoginForm onVerification={enableVerification} />
             ) : (
-              <SignupForm onPending={() => setPending(true)} />
+              <SignupForm onVerification={enableVerification} />
             )}
 
             <View style={styles.footer}>

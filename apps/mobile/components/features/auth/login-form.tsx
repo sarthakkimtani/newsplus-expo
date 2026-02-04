@@ -1,3 +1,4 @@
+import { isClerkAPIResponseError } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 
@@ -7,8 +8,8 @@ import { useClerkAuth } from "@/hooks/auth/use-clerk-auth";
 import { useForm } from "@/hooks/form/use-form";
 import { loginSchema } from "@/utils/auth-schema";
 
-export const LoginForm = () => {
-  const { login, getError } = useClerkAuth();
+export const LoginForm = ({ onVerification }: { onVerification: () => void }) => {
+  const { login } = useClerkAuth();
 
   const { form, errors, update, validate } = useForm({
     schema: loginSchema,
@@ -21,9 +22,11 @@ export const LoginForm = () => {
 
     setLoading(true);
     try {
-      await login(form.email, form.password);
-    } catch (e: any) {
-      Alert.alert("Error", getError(e, "Login failed"));
+      const requireOTP = await login(form.email, form.password);
+      if (requireOTP) onVerification();
+    } catch (e) {
+      if (isClerkAPIResponseError(e)) Alert.alert("Error", e.longMessage || e.message);
+      else if (e instanceof Error) Alert.alert("Error", e.message);
     } finally {
       setLoading(false);
     }

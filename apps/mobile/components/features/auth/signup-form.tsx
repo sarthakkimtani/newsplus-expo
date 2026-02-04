@@ -1,3 +1,4 @@
+import { isClerkAPIResponseError } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 
@@ -7,8 +8,8 @@ import { useClerkAuth } from "@/hooks/auth/use-clerk-auth";
 import { useForm } from "@/hooks/form/use-form";
 import { signupSchema } from "@/utils/auth-schema";
 
-export const SignupForm = ({ onPending }: { onPending: () => void }) => {
-  const { signup, getError } = useClerkAuth();
+export const SignupForm = ({ onVerification }: { onVerification: () => void }) => {
+  const { signup } = useClerkAuth();
   const { form, errors, update, validate } = useForm({
     schema: signupSchema,
     initialValues: { firstName: "", lastName: "", email: "", password: "" },
@@ -21,9 +22,10 @@ export const SignupForm = ({ onPending }: { onPending: () => void }) => {
     setLoading(true);
     try {
       await signup(form.firstName, form.lastName, form.email, form.password);
-      onPending();
-    } catch (e: any) {
-      Alert.alert("Error", getError(e, "Signup failed"));
+      onVerification();
+    } catch (e) {
+      if (isClerkAPIResponseError(e)) Alert.alert("Error", e.longMessage || e.message);
+      else if (e instanceof Error) Alert.alert("Error", e.message);
     } finally {
       setLoading(false);
     }

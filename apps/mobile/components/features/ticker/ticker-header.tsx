@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet, withUnistyles } from "react-native-unistyles";
 
 import { CompanyLogo } from "@/components/ui/company-logo";
 
@@ -21,7 +21,13 @@ export const TickerHeader = ({
   disabled = false,
   onWatchlistToggle,
 }: TickerHeaderProps) => {
-  const theme = UnistylesRuntime.getTheme();
+  const ThemedLoader = withUnistyles(ActivityIndicator, (theme) => ({
+    color: saved ? "#FFF" : theme.colors.primary,
+  }));
+
+  const ThemedIcon = withUnistyles(Ionicons, (theme) => ({
+    color: saved ? "#FFF" : theme.colors.primary,
+  }));
 
   return (
     <View style={styles.header}>
@@ -42,13 +48,9 @@ export const TickerHeader = ({
         disabled={disabled || isLoading}
       >
         {isLoading ? (
-          <ActivityIndicator size="small" color={saved ? "#FFF" : theme.colors.primary} />
+          <ThemedLoader size="small" />
         ) : (
-          <Ionicons
-            name={saved ? "checkmark-circle" : "add-circle-outline"}
-            size={20}
-            color={saved ? "#FFF" : theme.colors.primary}
-          />
+          <ThemedIcon name={saved ? "checkmark-circle" : "add-circle-outline"} size={20} />
         )}
         <Text style={[styles.watchlistButtonText, saved && styles.watchlistButtonTextActive]}>
           {saved ? "In Watchlist" : "Add to Watchlist"}

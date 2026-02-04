@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, Linking, Platform, ScrollView, Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet, withUnistyles } from "react-native-unistyles";
 
 import { TickerAbout } from "@/components/features/ticker/ticker-about";
 import { TickerHeader } from "@/components/features/ticker/ticker-header";
@@ -13,7 +13,10 @@ import { useTickerPersistedToggle } from "@/hooks/persistence/use-ticker-persist
 export const Ticker = () => {
   const { fetchStockProfile } = useApi();
   const { ticker } = useLocalSearchParams<{ ticker: string }>();
-  const theme = UnistylesRuntime.getTheme();
+
+  const ThemedLoader = withUnistyles(ActivityIndicator, (theme) => ({
+    color: theme.colors.primary,
+  }));
 
   const {
     data: profile,
@@ -32,7 +35,7 @@ export const Ticker = () => {
   if (isLoading || tickerSaver.isLoading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
+        <ThemedLoader size="large" />
       </View>
     );
   }

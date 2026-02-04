@@ -1,15 +1,13 @@
-import { Ionicons } from "@expo/vector-icons";
+import { UniIcons } from "@/components/utils/uni-icons";
 import { Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 export const TickerAbout = ({ about }: { about?: string }) => {
-  const theme = UnistylesRuntime.getTheme();
-
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <View style={styles.cardIconContainer}>
-          <Ionicons name="information-circle" size={18} color={theme.colors.primary} />
+          <UniIcons name="information-circle" size={18} color="primary" />
         </View>
         <Text style={styles.cardTitle}>About</Text>
       </View>

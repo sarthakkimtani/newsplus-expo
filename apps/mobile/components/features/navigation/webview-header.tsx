@@ -1,7 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Pressable, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
+import { UniIcons } from "@/components/utils/uni-icons";
 import { useArticlePersistedToggle } from "@/hooks/persistence/use-article-persisted-toggle";
 import { useArticlesStore } from "@/lib/stores/use-article-store";
 
@@ -13,7 +13,6 @@ interface HeaderProps {
 
 export const WebviewHeader = ({ params }: HeaderProps) => {
   const getArticleByUrl = useArticlesStore((s) => s.getArticleByUrl);
-  const theme = UnistylesRuntime.getTheme();
 
   const article = getArticleByUrl(params?.url!);
   const articleSaver = useArticlePersistedToggle(article);
@@ -21,10 +20,10 @@ export const WebviewHeader = ({ params }: HeaderProps) => {
   return (
     <View style={styles.headerRight}>
       <Pressable onPress={articleSaver.toggle}>
-        <Ionicons
+        <UniIcons
           name={articleSaver.isSaved ? "bookmark" : "bookmark-outline"}
           size={24}
-          color={theme.colors.text}
+          color="text"
         />
       </Pressable>
     </View>

@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
@@ -20,8 +20,6 @@ export const Account = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  const theme = UnistylesRuntime.getTheme();
 
   const handleUpdate = async () => {
     if (!user) return;
@@ -58,7 +56,6 @@ export const Account = () => {
           autoCapitalize="words"
           autoComplete="name-given"
         />
-        <View style={{ height: theme.spacing.md }} />
         <TextField
           label="Last Name"
           value={form.lastName}
@@ -108,6 +105,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   form: {
     flex: 1,
+    gap: theme.spacing.md,
   },
   footer: {
     paddingBottom: 60,

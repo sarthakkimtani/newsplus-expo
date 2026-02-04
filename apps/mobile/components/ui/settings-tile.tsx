@@ -1,6 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
+
+import { UniIcons } from "@/components/utils/uni-icons";
 
 interface SettingsTileProps {
   title: string;
@@ -10,8 +12,6 @@ interface SettingsTileProps {
 }
 
 export function SettingsTile({ title, onPress, isDestructive = false, icon }: SettingsTileProps) {
-  const theme = UnistylesRuntime.getTheme();
-
   return (
     <Pressable
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
@@ -19,19 +19,19 @@ export function SettingsTile({ title, onPress, isDestructive = false, icon }: Se
     >
       <View style={styles.leftContent}>
         {icon && (
-          <Ionicons
+          <UniIcons
             name={icon}
             size={20}
-            color={isDestructive ? theme.colors.danger : theme.colors.textSecondary}
+            color={isDestructive ? "danger" : "textSecondary"}
             style={styles.icon}
           />
         )}
         <Text style={[styles.title, isDestructive && styles.destructiveText]}>{title}</Text>
       </View>
-      <Ionicons
+      <UniIcons
         name="chevron-forward"
         size={20}
-        color={isDestructive ? theme.colors.danger : theme.colors.textSecondary}
+        color={isDestructive ? "danger" : "textSecondary"}
       />
     </Pressable>
   );

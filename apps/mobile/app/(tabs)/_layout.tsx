@@ -1,9 +1,9 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Icon, Label, NativeTabs, VectorIcon } from "expo-router/unstable-native-tabs";
-import { UnistylesRuntime } from "react-native-unistyles";
+import { useUnistyles } from "react-native-unistyles";
 
 export default function TabLayout() {
-  const theme = UnistylesRuntime.getTheme();
+  const { theme } = useUnistyles();
 
   return (
     <NativeTabs

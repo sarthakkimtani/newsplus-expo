@@ -3,15 +3,15 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Platform } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
+import { useUnistyles } from "react-native-unistyles";
 
 import { TabsHeader } from "@/components/features/navigation/tabs-header";
 import { WebviewHeader } from "@/components/features/navigation/webview-header";
 import { initDatabase } from "@/lib/db";
 
 export const AppLayout = () => {
+  const { theme } = useUnistyles();
   const { isLoaded, isSignedIn } = useAuth();
-  const theme = UnistylesRuntime.getTheme();
 
   useEffect(() => {
     initDatabase();

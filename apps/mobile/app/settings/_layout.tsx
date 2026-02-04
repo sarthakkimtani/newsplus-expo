@@ -1,7 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
 import { Stack, useNavigation } from "expo-router";
 import { Platform, Pressable } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
+
+import { UniIcons } from "@/components/utils/uni-icons";
 
 export default function SettingsLayout() {
   const screens = [
@@ -30,11 +31,10 @@ export default function SettingsLayout() {
 }
 
 const CloseButton = () => {
-  const theme = UnistylesRuntime.getTheme();
   const navigation = useNavigation();
   return (
     <Pressable style={styles.closeButton} onPress={() => navigation.getParent()?.goBack()}>
-      <Ionicons name="close" size={24} color={theme.colors.text} />
+      <UniIcons name="close" size={24} color="text" />
     </Pressable>
   );
 };

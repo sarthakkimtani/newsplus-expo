@@ -2,7 +2,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 import { ElevatedButton } from "@/components/ui/elevated-button";
 import { TextField } from "@/components/ui/text-field";
@@ -17,8 +17,6 @@ export const Password = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
   const router = useRouter();
-
-  const theme = UnistylesRuntime.getTheme();
 
   const handleUpdate = async () => {
     if (!user) return;
@@ -57,7 +55,6 @@ export const Password = () => {
           iconName="lock-closed-outline"
           isPassword
         />
-        <View style={{ height: theme.spacing.md }} />
         <TextField
           label="New Password"
           value={form.newPassword}
@@ -111,6 +108,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   form: {
     flex: 1,
+    gap: theme.spacing.md,
   },
   footer: {
     paddingBottom: 60,

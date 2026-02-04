@@ -1,17 +1,16 @@
-import { Ionicons } from "@expo/vector-icons";
 import { EodData } from "@newsplus/schemas";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
 import { CompanyLogo } from "@/components/ui/company-logo";
+import { UniIcons } from "@/components/utils/uni-icons";
 
 type StockItem = EodData[number];
 
 export const StockCard = ({ stock }: { stock: StockItem }) => {
   const [showOhlc, setShowOhlc] = useState(false);
-  const theme = UnistylesRuntime.getTheme();
   const router = useRouter();
 
   const priceChange = stock.close - stock.open;
@@ -64,10 +63,10 @@ export const StockCard = ({ stock }: { stock: StockItem }) => {
           </View>
         </View>
         <Pressable onPress={() => setShowOhlc(!showOhlc)} style={styles.chevronButton} hitSlop={8}>
-          <Ionicons
+          <UniIcons
             name={showOhlc ? "chevron-up" : "chevron-down"}
             size={24}
-            color={theme.colors.textSecondary}
+            color="textSecondary"
           />
         </Pressable>
       </View>
